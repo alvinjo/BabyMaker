@@ -12,7 +12,7 @@ public interface IBabyService {
 
     Baby addBaby(Baby baby);
 
-    ResponseEntity<Object> deleteBaby(Long id);
+    ResponseEntity<Object> killBaby(Long id);
 
     ResponseEntity<Object> updateBaby(Baby baby, Long id);
 

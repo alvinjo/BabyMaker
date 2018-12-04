@@ -45,9 +45,9 @@ public class BabyEndpoints {
         return service.getBaby(id);
     }
 
-    @DeleteMapping("${path.deleteBaby}")
+    @DeleteMapping("${path.killBaby}")
     public ResponseEntity<Object> deleteBaby(Long id){
-        return service.deleteBaby(id);
+        return service.killBaby(id);
     }
 
     @PutMapping("${path.updateBaby}")

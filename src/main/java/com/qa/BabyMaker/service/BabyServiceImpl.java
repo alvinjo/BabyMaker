@@ -33,7 +33,7 @@ public class BabyServiceImpl implements IBabyService {
     }
 
     @Override
-    public ResponseEntity<Object> deleteBaby(Long id) {
+    public ResponseEntity<Object> killBaby(Long id) {
         if(babyExists(id)){
             repo.deleteById(id);
             return ResponseEntity.ok().build();
