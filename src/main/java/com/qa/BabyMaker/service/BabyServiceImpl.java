@@ -34,9 +34,8 @@ public class BabyServiceImpl implements IBabyService {
 
     @Override
     public ResponseEntity<Object> deleteBaby(Long id) {
-        Optional<Baby> baby = repo.findById(id);
-        if(baby.isPresent()){
-            repo.delete(baby.get());
+        if(babyExists(id)){
+            repo.deleteById(id);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
@@ -44,12 +43,16 @@ public class BabyServiceImpl implements IBabyService {
 
     @Override
     public ResponseEntity<Object> updateBaby(Baby baby, Long id) {
-        Optional<Baby> dbBaby = repo.findById(id);
-        if(dbBaby.isPresent()){
+        if(babyExists(id)){
             baby.setId(id);
             repo.save(baby);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    private boolean babyExists(Long id){
+        Optional<Baby> dbBaby = repo.findById(id);
+        return dbBaby.isPresent();
     }
 }
