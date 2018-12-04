@@ -3,6 +3,7 @@ package com.qa.BabyMaker.rest;
 import com.qa.BabyMaker.persistence.domain.Baby;
 import com.qa.BabyMaker.service.IBabyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,15 @@ public class BabyEndpoints {
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    @Value("${path.babyNameGen}")
+    private String pathBabyNameGen;
+    @Value("${path.generateName}")
+    private String pathGenerateName;
+
+    @Value("${path.babyLifespan}")
+    private String pathBabyLifespan;
+    @Value("$path.predictLife")
+    private String pathPredict;
 
     @GetMapping("${path.getBabies}")
     public List<Baby> getBabies() {
@@ -47,7 +57,12 @@ public class BabyEndpoints {
 
 
     @PostMapping("${path.addBaby}")
-    public Baby addBaby(Baby baby){
+    public Baby addBaby(Baby baby, int length){
+        String generatedName = restTemplate
+                .getForObject(pathBabyNameGen+pathGenerateName+length+baby.getName(), String.class);
+        baby.setName(generatedName);
+        String lifespan = restTemplate.getForObject(pathBabyLifespan+pathPredict, String.class);
+        baby.setLifespan(Integer.parseInt(lifespan));
         return service.addBaby(baby);
     }
 
