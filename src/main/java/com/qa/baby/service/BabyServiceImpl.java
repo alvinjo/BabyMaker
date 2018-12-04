@@ -1,8 +1,8 @@
-package com.qa.BabyMaker.service;
+package com.qa.baby.service;
 
-import com.qa.BabyMaker.persistence.domain.Baby;
-import com.qa.BabyMaker.persistence.repository.BabyRepository;
-import com.qa.BabyMaker.util.BabyNotFoundException;
+import com.qa.baby.persistence.domain.Baby;
+import com.qa.baby.persistence.repository.BabyRepository;
+import com.qa.baby.util.BabyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.qa.BabyMaker.service;
+package com.qa.baby.service;
 
-import com.qa.BabyMaker.persistence.domain.Baby;
+import com.qa.baby.persistence.domain.Baby;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.qa.BabyMaker.util;
+package com.qa.baby.util;
 
 public class BabyNotFoundException extends RuntimeException {
 

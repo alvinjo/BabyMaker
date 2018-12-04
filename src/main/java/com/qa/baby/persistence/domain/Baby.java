@@ -1,4 +1,4 @@
-package com.qa.BabyMaker.persistence.domain;
+package com.qa.baby.persistence.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

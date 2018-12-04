@@ -1,7 +1,8 @@
-package com.qa.BabyMaker.rest;
+package com.qa.baby.rest;
 
-import com.qa.BabyMaker.persistence.domain.Baby;
-import com.qa.BabyMaker.service.IBabyService;
+import com.qa.baby.persistence.domain.Baby;
+import com.qa.baby.persistence.domain.JumperBaby;
+import com.qa.baby.service.IBabyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,9 @@ public class BabyEndpoints {
     @Value("${path.predictLife}")
     private String pathPredict;
 
+    @Value("${activemq.queue.name}")
+    private String queueName;
+
     @GetMapping("/getBabies")
     public List<Baby> getBabies() {
         return service.getBabies();
@@ -58,13 +62,19 @@ public class BabyEndpoints {
 
     @PostMapping("/addBaby/{length}")
     public Baby addBaby(@RequestBody Baby baby, @PathVariable int length){
-        String generatedName = restTemplate
-                .getForObject(pathBabyNameGen+pathGenerateName+length+"/"+baby.getName(), String.class);
+        String generatedName = restTemplate.getForObject(pathBabyNameGen+pathGenerateName+length+"/"+baby.getName(), String.class);
         baby.setName(generatedName);
 
         String lifespan = restTemplate.getForObject(pathBabyLifespan+pathPredict, String.class);
         baby.setLifespan(Integer.parseInt(lifespan));
+
+        sendToQueue(baby);
+
         return service.addBaby(baby);
+    }
+
+    private void sendToQueue(Baby baby){
+        jmsTemplate.convertAndSend("BabyQueue", new JumperBaby(baby));
     }
 
 }

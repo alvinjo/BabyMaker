@@ -1,4 +1,4 @@
-package com.qa.BabyMaker;
+package com.qa.baby;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
