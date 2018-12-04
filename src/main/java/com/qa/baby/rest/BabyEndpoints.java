@@ -50,12 +50,14 @@ public class BabyEndpoints {
     }
 
     @DeleteMapping("/killBaby")
-    public ResponseEntity<Object> deleteBaby(Long id){
+    public ResponseEntity<Object> deleteBaby(@RequestBody Long id){
+        sendToDelete(service.getBaby(id));
         return service.killBaby(id);
     }
 
-    @PutMapping("/updateBaby")
-    public ResponseEntity<Object> updateBaby(Baby baby, Long id){
+
+    @PutMapping("/updateBaby/{id}")
+    public ResponseEntity<Object> updateBaby(@RequestBody Baby baby, @PathVariable Long id){
         return service.updateBaby(baby, id);
     }
 
@@ -71,6 +73,10 @@ public class BabyEndpoints {
         sendToQueue(baby);
 
         return service.addBaby(baby);
+    }
+
+    private void sendToDelete(Baby baby){
+        jmsTemplate.convertAndSend("BabyQueueDelete", new JumperBaby(baby));
     }
 
     private void sendToQueue(Baby baby){
