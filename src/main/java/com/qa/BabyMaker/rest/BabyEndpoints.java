@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @CrossOrigin
-@RequestMapping("${path.base}")
+@RequestMapping("/baby")
 @RestController
 public class BabyEndpoints {
 
@@ -32,35 +32,36 @@ public class BabyEndpoints {
 
     @Value("${path.babyLifespan}")
     private String pathBabyLifespan;
-    @Value("$path.predictLife")
+    @Value("${path.predictLife}")
     private String pathPredict;
 
-    @GetMapping("${path.getBabies}")
+    @GetMapping("/getBabies")
     public List<Baby> getBabies() {
         return service.getBabies();
     }
 
-    @GetMapping("${path.getBaby}")
+    @GetMapping("/getBaby")
     public Baby getBaby(Long id) {
         return service.getBaby(id);
     }
 
-    @DeleteMapping("${path.killBaby}")
+    @DeleteMapping("/killBaby")
     public ResponseEntity<Object> deleteBaby(Long id){
         return service.killBaby(id);
     }
 
-    @PutMapping("${path.updateBaby}")
+    @PutMapping("/updateBaby")
     public ResponseEntity<Object> updateBaby(Baby baby, Long id){
         return service.updateBaby(baby, id);
     }
 
 
-    @PostMapping("${path.addBaby}")
-    public Baby addBaby(Baby baby, int length){
+    @PostMapping("/addBaby/{length}")
+    public Baby addBaby(@RequestBody Baby baby, @PathVariable int length){
         String generatedName = restTemplate
-                .getForObject(pathBabyNameGen+pathGenerateName+length+baby.getName(), String.class);
+                .getForObject(pathBabyNameGen+pathGenerateName+length+"/"+baby.getName(), String.class);
         baby.setName(generatedName);
+
         String lifespan = restTemplate.getForObject(pathBabyLifespan+pathPredict, String.class);
         baby.setLifespan(Integer.parseInt(lifespan));
         return service.addBaby(baby);
