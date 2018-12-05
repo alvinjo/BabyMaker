@@ -70,17 +70,25 @@ public class BabyEndpoints {
         String lifespan = restTemplate.getForObject(pathBabyLifespan+pathPredict, String.class);
         baby.setLifespan(Integer.parseInt(lifespan));
 
+        Baby thisBaby = service.addBaby(baby);
+        System.out.println("what its saving: " + thisBaby);
+        baby.setBabyId(thisBaby.getBabyId());
+        System.out.println("what i want to store: " + baby);
+
         sendToQueue(baby);
 
-        return service.addBaby(baby);
+        return baby;
     }
 
     private void sendToDelete(Baby baby){
-        jmsTemplate.convertAndSend("BabyQueueDelete", new JumperBaby(baby));
+        JumperBaby deliverBaby = new JumperBaby(baby.getBabyId().toString(), baby.getName(), baby.getLifespan());
+        jmsTemplate.convertAndSend("BabyQueueDelete", deliverBaby);
     }
 
     private void sendToQueue(Baby baby){
-        jmsTemplate.convertAndSend("BabyQueue", new JumperBaby(baby));
+        JumperBaby deliverBaby = new JumperBaby(baby.getBabyId().toString(), baby.getName(), baby.getLifespan());
+        System.out.println("baby im sending: " + deliverBaby);
+        jmsTemplate.convertAndSend("BabyQueue", deliverBaby);
     }
 
 }

@@ -2,7 +2,7 @@ package com.qa.baby.persistence.domain;
 
 public class JumperBaby {
 
-    private Long babyId;
+    private String babyId;
 
     private String name;
 
@@ -20,23 +20,17 @@ public class JumperBaby {
         this.lifespan = lifespan;
     }
 
-    public JumperBaby(Long babyId, String name, int lifespan){
+    public JumperBaby(String babyId, String name, int lifespan){
         this.babyId = babyId;
         this.name = name;
         this.lifespan = lifespan;
     }
 
-    public JumperBaby(Baby baby){
-        this.babyId = baby.getId();
-        this.name = baby.getName();
-        this.lifespan = baby.getLifespan();
-    }
-
-    public Long getId() {
+    public String getBabyId() {
         return babyId;
     }
 
-    public void setId(Long babyId) {
+    public void setBabyId(String babyId) {
         this.babyId = babyId;
     }
 
@@ -47,4 +41,10 @@ public class JumperBaby {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString(){
+        return "ID: "+ babyId + ", Name: " + name + ", Lifespan: " + lifespan;
+    }
+
 }

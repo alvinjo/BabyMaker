@@ -44,7 +44,7 @@ public class BabyServiceImpl implements IBabyService {
     @Override
     public ResponseEntity<Object> updateBaby(Baby baby, Long id) {
         if(babyExists(id)){
-            baby.setId(id);
+            baby.setBabyId(id);
             repo.save(baby);
             return ResponseEntity.ok().build();
         }

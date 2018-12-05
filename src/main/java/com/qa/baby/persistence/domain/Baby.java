@@ -9,7 +9,7 @@ public class Baby {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long babyId;
 
     private String name;
 
@@ -27,19 +27,19 @@ public class Baby {
         this.lifespan = lifespan;
     }
 
-    public Baby(Long id, String name, int lifespan){
-        this.id = id;
+    public Baby(Long babyId, String name, int lifespan){
+        this.babyId = babyId;
         this.name = name;
         this.lifespan = lifespan;
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getBabyId() {
+        return babyId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBabyId(Long babyId) {
+        this.babyId = babyId;
     }
 
     public String getName() {
@@ -49,4 +49,10 @@ public class Baby {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString(){
+        return "ID: "+ babyId + ", Name: " + name + ", Lifespan: " + lifespan;
+    }
+
 }
