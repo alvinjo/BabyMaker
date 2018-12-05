@@ -52,7 +52,7 @@ public class Baby {
 
     @Override
     public String toString(){
-        return "ID: "+ babyId + ", Name: " + name + ", Lifespan: " + lifespan;
+        return "{\"babyId\":\"" + babyId + "\", \"name\":\"" + name + "\", \"lifespan\":\"" + lifespan + "\"}";
     }
 
 }

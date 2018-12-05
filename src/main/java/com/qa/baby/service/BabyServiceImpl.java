@@ -29,7 +29,19 @@ public class BabyServiceImpl implements IBabyService {
 
     @Override
     public Baby addBaby(Baby baby) {
+        if(rulesApply(baby)){
+            return new Baby(-1L,"#",-1);
+        }
         return repo.save(baby);
+    }
+
+    private boolean rulesApply(Baby baby){
+        System.out.println(baby.getName().toLowerCase());
+        if(baby.getName().toLowerCase().contains("batman")){
+            System.out.println("rules apply");
+            return true;
+        }
+        return false;
     }
 
     @Override

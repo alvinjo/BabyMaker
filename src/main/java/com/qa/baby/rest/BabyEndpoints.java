@@ -72,12 +72,10 @@ public class BabyEndpoints {
 
         Baby thisBaby = service.addBaby(baby);
         System.out.println("what its saving: " + thisBaby);
-        baby.setBabyId(thisBaby.getBabyId());
-        System.out.println("what i want to store: " + baby);
 
-        sendToQueue(baby);
+        sendToQueue(thisBaby);
 
-        return baby;
+        return thisBaby;
     }
 
     private void sendToDelete(Baby baby){
@@ -85,10 +83,15 @@ public class BabyEndpoints {
         jmsTemplate.convertAndSend("BabyQueueDelete", deliverBaby);
     }
 
-    private void sendToQueue(Baby baby){
+    private boolean sendToQueue(Baby baby){
+        boolean badBaby = (baby.getBabyId()==-1L);
+        if(badBaby){ return false;}
+
         JumperBaby deliverBaby = new JumperBaby(baby.getBabyId().toString(), baby.getName(), baby.getLifespan());
         System.out.println("baby im sending: " + deliverBaby);
         jmsTemplate.convertAndSend("BabyQueue", deliverBaby);
+
+        return true;
     }
 
 }
